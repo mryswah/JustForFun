@@ -132,7 +132,7 @@ public class MemesController {
             return CommonConstants.PAGE_MEMES_UPLOAD;
         }
         memesService.uploadMemes(memesDto);
-        return CommonConstants.REDIRECT_MEMES;
+        return "redirect:/memes?successfulPost";
     }
 
     @PostMapping("/memes/{memesid}/{query}/delete")

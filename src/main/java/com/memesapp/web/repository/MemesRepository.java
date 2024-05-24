@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface MemesRepository extends JpaRepository<Memes, Long> {
-    @Query("SELECT c from Memes c WHERE c.category LIKE CONCAT('%', :query, '%') OR c.labels LIKE CONCAT('%', :query, '%') OR c.title LIKE CONCAT('%', :query, '%') ORDER BY c.createdOn DESC")
+    @Query("SELECT c from Memes c WHERE UPPER(c.category) LIKE UPPER(CONCAT('%', :query, '%')) OR UPPER(c.labels) LIKE UPPER(CONCAT('%', :query, '%')) OR UPPER(c.title) LIKE UPPER(CONCAT('%', :query, '%')) ORDER BY c.createdOn DESC")
     List<Memes> searchMemes(String query);
 
     @Query("SELECT c from Memes c WHERE c.category=:query ORDER BY c.createdOn DESC")

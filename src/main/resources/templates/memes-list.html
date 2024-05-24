@@ -21,9 +21,12 @@
         <div th:if="${param.successfulRegistration}" class="popup-login-success">
             <p>You have successfully registered a new account!</p>
         </div>
+        <div th:if="${param.successfulPost}" class="popup-login-success">
+            <p>Aww yeaaah, you have successfully posted a meme!</p>
+        </div>
         <div th:if="${#lists.isEmpty(memes)}">
             <div class="container-fluid px-4">
-                <ol class="breadcrumb mb-0 mt-1">
+                <ol class="breadcrumb mb-0 mt-5">
                     <h1>No memes found :( Why don't you post something for everyone? :) </h1>
                 </ol>
             </div>
