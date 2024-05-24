@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Memes, Memes and More Memes</title>
+</head>
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3" th:href="@{/memes}">Just For Fun</a>
+    <!-- Sidebar Toggle-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+            class="fas fa-bars"></i></button>
+    <!-- Navbar Search-->
+    <form th:action="@{/memes/search}" class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+        <div class="input-group">
+            <input name="query" class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                   aria-describedby="btnNavbarSearch"/>
+            <button class="btn btn-primary" id="btnNavbarSearch" type="submit"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li sec:authorize="!isAuthenticated()"><a class="dropdown-item" href="#" id="login-btn">Login/Register</a></li>
+                <div sec:authorize="isAuthenticated()">
+                    <li><a class="dropdown-item" th:href="@{/profile/{query}(query=${users.username})}">My Profile</a></li>
+                    <li><hr class="dropdown-divider"/></li>
+                    <li><a class="dropdown-item" th:href="@{/settings}">Settings</a></li>
+                    <li><hr class="dropdown-divider"/></li>
+                    <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
+                </div>
+            </ul>
+        </li>
+    </ul>
+    <div th:if="${users!=null and users.username!=null}">
+    <a class="ui-btn btn-color-primary" disabled="false" th:href="@{/memes/upload}">
+        <button class="submit-btn">
+            <img src="https://cdn-icons-png.flaticon.com/128/8220/8220341.png" alt="Custom Icon">
+            Post
+        </button>
+    </a>
+    </div>
+    <div th:unless="${users!=null and users.username!=null}">
+    <a class="ui-btn btn-color-primary" disabled="false" href="#" id="memes-upload-login-btn">
+        <button class="submit-btn">
+            <img src="https://cdn-icons-png.flaticon.com/128/8220/8220341.png" alt="Custom Icon">
+            Post
+        </button>
+    </a>
+    </div>
+</nav>
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <div class="sb-sidenav-menu-heading">Categories</div>
+                    <div th:each="category : ${categories}">
+                        <a class="nav-link" th:href="@{/memes/category/{query}(query=${category.categoryName})}">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <div th:text="${category.categoryName}"></div>
+                        </a>
+                    </div>
+                    <div class="sb-sidenav-menu-heading">Labels</div>
+                    <div th:each="label : ${labels}">
+                        <a class="nav-link" th:href="@{/memes/labels/{query}(query=${label.labelName})}">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <div th:text="${label.labelName}"></div>
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    <div th:if="${users!=null and users.username!=null}">
+                        <a th:text="${users.username}"></a>
+                    </div>
+                    <div th:unless="${users!=null and users.username!=null}">
+                        Guest
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <body layout:fragment="body">
+    </body>
+    <div th:insert="~{login-popup :: login-popup}"></div>
+    <div th:insert="~{register-popup :: register-popup}"></div>
+    <div th:insert="~{delete-popup :: delete-popup}"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+        crossorigin="anonymous"></script>
+<script th:src="@{/js/scripts.js}"></script>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}"
+        lang="en">
+<head>
+    <title>Memes, Memes and More Memes</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+<div layout:fragment="body" id="layoutSidenav_content">
+    <main>
+        <div id="login-form-page">
+            <h2 style="color:white;">Log in</h2>
+            <hr style="color:white;">
+            <form method="post" th:action="@{/login}">
+                <input class="form-control" type="text" placeholder="Username" id="username"
+                       name="username"/>
+                <input class="form-control" type="password" placeholder="Password" id="password" name="password"/>
+                <div th:if="${param.error}" style="color:red;">
+                    Invalid Username or Password!
+                </div>
+                <input type="submit" id="login-button" value="Log in" disabled>
+                <hr class="hr-text gradient" data-content="OR">
+                <div style="color:white">Don't have an account? <a th:href="@{/register}">Sign Up</a></div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

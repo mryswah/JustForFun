@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}"
+        lang="en">
+<head>
+    <title>Memes, Memes and More Memes</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+<div layout:fragment="body" id="layoutSidenav_content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <h1 small class="mt-5">Upload a Meme</h1>
+            <div class="card shadow-lg border-0 rounded-lg mt-3">
+                <div class="card-body">
+                    <form role="form" enctype="multipart/form-data" method="post" th:action="@{/memes/upload}"
+                          th:object="${memes}">
+                        <input type="hidden" name="createdBy" th:value="${users.username}"/>
+                        <div class="mt-2">
+                            <div class="sel">
+                                <select class="form-control" id="category" name="category" th:field="*{category}">
+                                    <option value="">Choose a Category</option>
+                                    <option th:each="category : ${categories}"
+                                            th:value="${category.categoryName}"
+                                            th:text="${category.categoryName}">
+                                    </option>
+                                </select>
+                                <p th:if="${#fields.hasErrors('category')}" class="text-danger"
+                                   th:errors="*{category}"></p>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <input class="form-control" type="text" placeholder="Enter a Title" id="title" name="title"
+                                   th:field="*{title}"/>
+                            <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
+                        </div>
+                        <div class="mt-2">
+                            <div class="upload-container">
+                                <div class="upload-img">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/9052/9052945.png">
+                                </div>
+                                <p class="upload-text">Please choose an image to upload. (png, jpeg, jpg, gif)</p>
+                            </div>
+                            <div>
+                                <input type="file" class="visually-hidden" id="upload-input" name="image"
+                                       th:field="*{image}">
+                                <button type="button" class="upload-btn">Choose Image</button>
+                                <p th:if="${#fields.hasErrors('image')}" class="text-danger" th:errors="*{image}"></p>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <div class="sel">
+                                <select class="form-control" id="labels" name="labels" th:field="*{labels}">
+                                    <option value="">Choose a Label</option>
+                                    <option th:each="label : ${labels}"
+                                            th:value="${label.labelName}"
+                                            th:text="${label.labelName}">
+                                    </option>
+                                </select>
+                                <p th:if="${#fields.hasErrors('labels')}" class="text-danger" th:errors="*{labels}"></p>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Post</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

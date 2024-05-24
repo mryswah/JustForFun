@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}"
+        lang="en">
+<head>
+    <title>Memes, Memes and More Memes</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+<div layout:fragment="body" id="layoutSidenav_content">
+    <main>
+        <div th:if="${param.logout}" class="popup-logout-success">
+            <p>You have successfully logged out.</p>
+        </div>
+        <div th:if="${param.success}" class="popup-login-success">
+            <p>You have successfully logged in!</p>
+        </div>
+        <div th:if="${param.successfulRegistration}" class="popup-login-success">
+            <p>You have successfully registered a new account!</p>
+        </div>
+        <div th:if="${#lists.isEmpty(memes)}">
+            <div class="container-fluid px-4">
+                <ol class="breadcrumb mb-0 mt-1">
+                    <h1>No memes found :( Why don't you post something for everyone? :) </h1>
+                </ol>
+            </div>
+        </div>
+        <div th:unless="${#lists.isEmpty(memes)}">
+            <div th:each="meme, i : ${memes}" class="container-fluid px-4">
+                <ol class="breadcrumb mb-0 mt-1">
+                    <li class="breadcrumb-item active" th:text="${meme.category}"></li>
+                </ol>
+                <h1 small class="mt-0" th:text="${meme.title}"></h1>
+                <ol class="breadcrumb mb-4">
+                    <img src="data:image/jpeg;base64," th:attrappend="src=${image[i.index]}">
+                </ol>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active" th:text="${meme.labels}"></li>
+                    <li class="breadcrumb" style="padding-left:29em" th:text="'Posted by : ' + ${meme.createdBy}"></li>
+                </ol>
+                <hr style="color:black;width:40em;">
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

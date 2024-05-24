@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}"
+        lang="en">
+<head>
+    <title>Memes, Memes and More Memes</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+<div layout:fragment="body" id="layoutSidenav_content">
+    <main>
+        <div th:if="${param.success}" class="popup-login-success">
+            <p>Post deleted!</p>
+        </div>
+        <div class="container-fluid px-4">
+            <div class="row justify-content-center">
+                <div style="display: flex; align-items: center;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/64/64572.png"
+                         style="width: 100px; height: 100px;margin-top:2rem">
+                    <div style="display: flex; flex-direction: column; padding-left:1rem;">
+                        <h1 class="mt-5" th:text="${users.name}"></h1>
+                        <span th:text="'@' + ${users.username}"></span>
+                        <span class="mt-0" th:text="${users.email}"></span>
+                    </div>
+                </div>
+                <h1 class="mt-5">My Posts</h1>
+                <div class="card shadow-lg border-0 rounded-lg mt-3">
+                    <div class="card-body">
+                        <div th:if="${#lists.isEmpty(myMemes)}">
+                            <h1>No memes found :( Why don't you post something for everyone? :) </h1>
+                        </div>
+                        <div th:unless="${#lists.isEmpty(myMemes)}">
+                            <div th:each="meme, i : ${myMemes}" class="container-fluid px-4">
+                                <ol class="breadcrumb mb-0 mt-1">
+                                    <li class="breadcrumb-item active" th:text="${meme.category}"></li>
+                                </ol>
+                                <h1 small class="mt-0" th:text="${meme.title}"></h1>
+                                <ol class="breadcrumb mb-4">
+                                    <img src="data:image/jpeg;base64," th:attrappend="src=${image[i.index]}">
+                                </ol>
+                                <ol class="breadcrumb mb-4">
+                                    <li class="breadcrumb-item active" th:text="${meme.labels}"></li>
+                                    <a th:id="|delete-post-btn_${i.index}|" href="#" style="padding-left:40em">Delete
+                                        Post</a>
+                                    <div th:insert="~{delete-post-popup :: delete-post-popup(${i.index},${meme.id})}"></div>
+                                </ol>
+                                <hr style="color:black;width:40em;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

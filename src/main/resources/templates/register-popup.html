@@ -1,0 +1,23 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="register-popup">
+    <div id="register-popup">-->
+        <div id="register-form">
+            <h2 style="color:white;">Register</h2>
+            <hr style="color:white;">
+            <form method="post" th:action="@{/register}" th:object="${users}">
+                <input class="form-control" type="text" placeholder="Name" id="popupregname" name="popupregname"
+                       th:field="*{name}"/>
+                <input class="form-control" type="text" placeholder="Email Address" id="popupregemail"
+                       name="popupregemail"
+                       th:field="*{email}"/>
+                <input class="form-control" type="text" placeholder="Username" id="popupregusername"
+                       name="popupregusername"
+                       th:field="*{username}"/>
+                <input class="form-control" type="password" placeholder="Password" id="popupregpassword"
+                       name="popupregpassword"
+                       th:field="*{password}"/>
+                <input type="submit" id="popup-register-button" value="Register" disabled>
+                <div style="color:white">Already a member? <a href="#" id="login-btn-existing">Login</a></div>
+            </form>
+        </div>
+    </div>
+</div>

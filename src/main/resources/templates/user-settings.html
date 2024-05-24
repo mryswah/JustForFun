@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}"
+        lang="en">
+<head>
+    <title>Memes, Memes and More Memes</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+<div layout:fragment="body" id="layoutSidenav_content">
+    <main>
+        <div th:if="${param.success}" class="popup-login-success">
+            <p>You have successfully updated your account!</p>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <h1 small class="mt-5">Update Account Details</h1>
+                <div class="card shadow-lg border-0 rounded-lg mt-3">
+                    <div class="card-body">
+                        <div th:if="${users!=null}">
+                            <form role="form" enctype="multipart/form-data" method="post"
+                                  th:action="@{/users/{usersId}/update(usersId=${users.id})}" th:object="${users}">
+                                <input type="hidden" name="id" th:value="${users.id}"/>
+                                <input type="hidden" name="username" th:value="${users.username}"/>
+                                <div class="form-floating mt-2">
+                                    Email
+                                    <input class="form-control" type="text" th:placeholder="${users.email}" id="email"
+                                           name="email" th:field="*{email}"/>
+                                    <p th:if="${#fields.hasErrors('email')}" class="text-danger"
+                                       th:errors="*{email}"></p>
+                                </div>
+                                <div th:if="${param.error}" style="color:red;">
+                                    <p>Incorrect Input, the Email Address might be in used.</p>
+                                </div>
+                                <div class="form-floating mt-2">
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    <a href="#" style="padding-left:40em" id="delete-btn">Delete Account</a>
+                                </div>
+                            </form>
+                            <form role="form" enctype="multipart/form-data" method="post"
+                                  th:action="@{/users/{usersId}/updatePassword(usersId=${users.id})}"
+                                  th:object="${users}">
+                                <div class="form-floating mt-2">
+                                    Old Password
+                                    <input class="form-control" type="password" id="oldPassword" name="oldPassword"/>
+                                </div>
+                                <div class="form-floating mt-2">
+                                    New Password
+                                    <input class="form-control" type="password" id="newPassword" name="newPassword"/>
+                                </div>
+                                <div class="form-floating mt-2">
+                                    Re-type New Password
+                                    <input class="form-control" type="password" id="retypeNewPassword"
+                                           name="retypeNewPassword"/>
+                                </div>
+                                <div th:if="${param.errorPassword}" style="color:red;">
+                                    <p>Incorrect or Password Mismatch</p>
+                                </div>
+                                <div class="form-floating mt-2">
+                                    <button type="submit" class="btn btn-primary">Change Password</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="delete-popup">
+    <div id="delete-popup">
+        <div id="delete-form">
+            <h2 style="color:white;">Log in</h2>
+            <hr style="color:white;">
+            <form method="post" th:action="@{/users/{usersId}/delete(usersId=${users.id})}">
+                <b style="color:white;font-size:25px;">This will delete your account</b>
+                <hr style="color:white;">
+                <p style="color:white;font-size:20px;">You're about to start the process of permanently deleting your
+                    account.<br>
+                    Your profile will no longer be viewable, and all posts made by you will be deleted as well.</p>
+                <hr style="color:white;">
+                <input type="submit" id="delete-button" style="color:red;font-weight:bold;" value="Delete Account">
+            </form>
+        </div>
+    </div>
+</div>
